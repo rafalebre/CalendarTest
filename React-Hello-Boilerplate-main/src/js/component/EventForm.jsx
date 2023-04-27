@@ -13,39 +13,39 @@ const EventForm = () => {
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-  
-    // Send form data to server to create calendar event
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: eventName,
-        date: eventDate,
-        time: eventTime,
-        location: eventLocation,
-      }),
-    };
-    try {
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts", requestOptions);
-      if (response.ok) {
-        const event = await response.json();
-        setCalendarEvents([...calendarEvents, event]);
-        alert("Event created successfully!");
-        setEventName("");
-        setEventDate("");
-        setEventTime("");
-        setEventLocation("");
-      } else {
-        throw new Error("Failed to create event");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  
-    setSubmitting(false);
+  e.preventDefault();
+  setSubmitting(true);
+
+  // Send form data to server to create calendar event
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: eventName,
+      date: eventDate,
+      time: eventTime,
+      location: eventLocation,
+    }),
   };
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", requestOptions);
+    if (response.ok) {
+      const event = await response.json();
+      setCalendarEvents([...calendarEvents, event]);
+      alert("Event created successfully!");
+      setEventName("");
+      setEventDate("");
+      setEventTime("");
+      setEventLocation("");
+    } else {
+      throw new Error("Failed to create event");
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+
+  setSubmitting(false);
+};
 
   return (
     <>

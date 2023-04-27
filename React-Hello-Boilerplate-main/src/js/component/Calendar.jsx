@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-export default function Calendar({ events: initialEvents }) {
+export default function Calendar({ events: initialEvents, onEventClick }) {
   const [events, setEvents] = useState(initialEvents);
 
   const handleDateSelect = (selectInfo) => {
@@ -38,12 +38,7 @@ export default function Calendar({ events: initialEvents }) {
   };
 
   const handleEventClick = (clickInfo) => {
-    if (clickInfo.event.title === 'New Event') {
-      const confirmed = window.confirm('Are you sure you want to remove this event?');
-      if (confirmed) {
-        setEvents((prevEvents) => prevEvents.filter((event) => event.id !== clickInfo.event.id));
-      }
-    }
+    onEventClick(clickInfo.event);
   };
 
   const handleEventChange = (changeInfo) => {
